@@ -1,42 +1,42 @@
 <?php
-class MySql extends Sql
+class PgSql extends Sql
 {
+    private $connect;
+
     function __construct(){
         if(DEMO === false)
         {
-        mysql_connect(HOST, USER, PASSWORD);
-        mysql_select_db(DB_NAME);
+        $this->connect = pg_connect('host='.'localhost'.', dbname='.'table'.', user='.'root'.', user password='.'');
         }
         else return true;
     }
 
     function selectQuery($row, $table, $limit)
     {
-        parent::selectQuery($row, $table,$limit);
+        parent::selectQuery($row, $table, $limit);
         if(DEMO === true)
             return __Class__.__Method__.$this->query;
         else
         {
-           $res = mysql_query($this->query);
+           $res = pg_query($this->connect ,$this->query);
            $arr=array();
-           $row = mysql_fetch_assoc($res);
-           foreach($row as $arr)
-             $arr=$a;
-           return $this->query = $arr;
+            $row = pg_fetch_array($res);
+            foreach($row as $res)
+            $arr[]=$res;
+            return $this->query = $arr;
         }
     }
 
     function deleteQuery($row, $name, $value, $limit)
     {
-        parent::deleteQuery($row, $name, $value,$limit);
+        parent::deleteQuery($row, $name, $value, $limit);
         if(DEMO === true)
             return __Class__.__Method__.$this->query;
         else
         {
-           $res = mysql_query($this->$query);
+           $res = pg_query($this->$query);
            return true;
         }
-
     }
 
     function insertQuery($row, $value, $table, $limit)
@@ -46,7 +46,7 @@ class MySql extends Sql
             return __Class__.__Method__.$this->query;
         else
         {
-           $res = mysql_query($this->$query);
+           $res = pg_query($this->$query);
            return true;
         }
 
@@ -60,7 +60,7 @@ class MySql extends Sql
        return __Class__.__Method__.$this->query;
        else
         {
-           $res = mysql_query($this->$query);
+           $res = pg_query($this->$query);
            return true;
         }
 
@@ -68,7 +68,7 @@ class MySql extends Sql
     function __destruct()
     {
         if (DEMO === false)
-            mysql_close();
+            pg_close($this->connect);
     }
 
 }
