@@ -17,7 +17,7 @@ class Session implements Data {
 
     function delete($sessid) {
         unset($_SESSION[$sessid]);
-        return true;
+        return false;
     }
 
 }

@@ -5,7 +5,11 @@
 </head>
 <body>
     <h3>Interface</h3>
-<?=$value?>
+<?
+=$value1;
+=$value;
+=$value1;
+    ?>
 
 </body>
 </html>
